@@ -1,0 +1,139 @@
+.tld-category-box {
+  position: relative;
+  margin-top: 20px;
+}
+.tld-category-img {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+.tld-category-img img {
+  width: 50%;
+  height: auto;
+}
+.tld-category-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2.5rem;
+  color: #fff;
+}
+.tld-category-info h5 {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.tld-category-info h5 a {
+  color: #fff;
+  text-decoration: none;
+}
+.tld-category-slider.swiper {
+  overflow: inherit;
+}
+img {
+  vertical-align: top;
+  border: 0;
+}
+
+.tld-domain-slider {
+  height: 73vh;
+  height: 790px;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: 0;
+  margin-top: 2rem;
+}
+
+.tld-category-img img {
+  width: 100%;
+  height: auto;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+  border: 0;
+}
+.tld-category-info h5 a {
+  color: #fff;
+  text-decoration: none;
+}
+.btn.btn-white.btn-outline {
+  background: transparent;
+  color: #fff;
+  border-color: #fff;
+}
+
+.btn.btn-xs {
+  font-size: 0.85rem;
+  padding: 0.9rem 1.7rem;
+}
+.btn.btn-white {
+  background: #fff;
+  border-color: #fff;
+  color: #212529;
+}
+.btn {
+  font-weight: 600;
+  padding: 1.1rem 2.5rem;
+  line-height: 1.25;
+  text-decoration: none !important;
+  border-width: 1px;
+  border-style: solid;
+  box-shadow: none !important;
+  letter-spacing: 0.03rem;
+  transition: 0.55s all;
+  border-radius: 0.5rem;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+}
+.btn.btn-white:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #111111;
+}
+.section-row {
+  margin-left: -130px;
+  margin-right: 0px;
+}
+.slidercategory-nav {
+  display: flex;
+}
+.slidercategory-nav .swiper-button-nex,
+.slidercategory-nav .swiper-button-pre {
+  width: 3rem;
+  height: 3rem;
+  color: #111111;
+  border: 2px solid #111111;
+  top: 0;
+  margin: 0;
+  position: relative;
+  left: 0;
+  border-radius: 50%;
+  margin: 1rem;
+}
+
+.tld-category-slider.swiper {
+  overflow: inherit;
+}
+.section-title {
+  margin-bottom: 3rem;
+}
+
+.section-title h2 {
+  font-size: 2.2rem;
+  font-weight: 500;
+  letter-spacing: 0.05rem;
+  margin-bottom: 1rem;
+}
+.section-title p {
+  margin: 0;
+}
+
+.section-row {
+  padding: 5rem 0;
+}
