@@ -45,3 +45,4 @@ function PurchaseDomain(props) {
 }
 
 export default PurchaseDomain;
+

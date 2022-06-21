@@ -102,3 +102,4 @@ function CategoryBox(props) {
 }
 
 export default CategoryBox;
+
