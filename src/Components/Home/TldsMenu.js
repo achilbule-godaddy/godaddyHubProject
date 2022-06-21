@@ -51,7 +51,7 @@ function TldsMenu({ data }) {
           ></div>
           <div class="container">
             <div class="row">
-              <div class="col-xl-6 col-md-8">
+              <div class="col-xxl-6 col-xl-7 col-md-8">
                 <div class="hero-text mt-md-auto text-white">
                   <h1>
                     Own what <br />
@@ -88,7 +88,7 @@ function TldsMenu({ data }) {
                   </div>
                   <div class="tld-link">
                     <a href="#">
-                      Learn more about <span>{tldata[0]}</span>
+                      Learn more about <span>.{tldata[0]}</span>
                       <ArrowLogo />
                     </a>
                   </div>
@@ -152,6 +152,10 @@ function TldsMenu({ data }) {
               direction="vertical"
               className="tld-slider"
               loopedSlides={90}
+              mousewheel={true}
+              keyboard={{
+                enabled: true,
+              }}
               observer
               observeParents
               onSwiper={setThumbsSwiper}

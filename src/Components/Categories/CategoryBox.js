@@ -31,11 +31,11 @@ function CategoryBox(props) {
       category.push(
         <SwiperSlide key={`slide-${index}`} tag="div">
           <a href="#" class="tld-category-box">
-            <div class="tld-category-img">
-              <img
-                src={`${process.env.REACT_APP_TLD_IMAGE_URL}${domainCategory.category_image}`}
-                alt=""
-              />
+            <div class="tld-category-img" 
+              style={{
+                backgroundImage: `url(${process.env.REACT_APP_TLD_IMAGE_URL}${domainCategory.category_image}`,
+              }}
+            >
             </div>
             <div class="tld-category-info">
               <h5>
@@ -73,11 +73,23 @@ function CategoryBox(props) {
               grid={{
                 rows: 3,
               }}
-              spaceBetween={24}
-              pagination={{
-                clickable: true,
+              breakpoints={{
+                0: {
+                  slidesPerView: 1.33,
+                },
+                767: {
+                  slidesPerView: 2.1,
+                },
+                991: {
+                  slidesPerView: 2.5,
+                },
+                1024: {
+                  slidesPerView:3,
+                },
               }}
-              modules={[Grid, Pagination]}
+              spaceBetween={24}
+              navigation={true}
+              modules={[Grid, Navigation]}
               className="tld-category-slider"
             >
               {category}
