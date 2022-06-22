@@ -31,12 +31,12 @@ function CategoryBox(props) {
       category.push(
         <SwiperSlide key={`slide-${index}`} tag="div">
           <a href="#" class="tld-category-box">
-            <div class="tld-category-img" 
+            <div
+              class="tld-category-img"
               style={{
                 backgroundImage: `url(${process.env.REACT_APP_TLD_IMAGE_URL}${domainCategory.category_image}`,
               }}
-            >
-            </div>
+            ></div>
             <div class="tld-category-info">
               <h5>
                 {domainCategory.category_name}
@@ -73,6 +73,13 @@ function CategoryBox(props) {
               grid={{
                 rows: 3,
               }}
+              spaceBetween={24}
+              navigation={{
+                nextEl: ".category-button-next",
+                prevEl: ".category-button-prev",
+              }}
+              modules={[Grid, Navigation]}
+              className="tld-category-slider"
               breakpoints={{
                 0: {
                   slidesPerView: 1.33,
@@ -84,16 +91,16 @@ function CategoryBox(props) {
                   slidesPerView: 2.5,
                 },
                 1024: {
-                  slidesPerView:3,
+                  slidesPerView: 3,
                 },
               }}
-              spaceBetween={24}
-              navigation={true}
-              modules={[Grid, Navigation]}
-              className="tld-category-slider"
             >
               {category}
             </Swiper>
+            <div class="swiper-nav">
+              <div class="swiper-button-prev category-button-prev"></div>
+              <div class="swiper-button-next category-button-next"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -102,4 +109,3 @@ function CategoryBox(props) {
 }
 
 export default CategoryBox;
-

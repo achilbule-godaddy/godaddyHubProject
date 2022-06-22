@@ -2,16 +2,15 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper";
 import "../../../node_modules/swiper/swiper-bundle.css";
-import "../../../node_modules/swiper/swiper-bundle.js";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { EffectFade, Thumbs, Controller } from "swiper";
+import { EffectFade, Thumbs, Mousewheel, Keyboard } from "swiper";
 import { useState, useEffect } from "react";
 import ArrowLogo from "../Logos/ArrowLogo";
 import SearchIcon from "../Logos/SearchIcon";
-import env from "react-dotenv";
+import { Link, useLocation } from "react-router-dom";
 
 // Import Swiper styles
 
@@ -32,7 +31,9 @@ function TldsMenu({ data }) {
     t.push(tl.tld_placeholder);
     tld.push(t);
   });
+  const [searchedText, setSearchedText] = useState("");
   console.log(tld);
+  console.log(searchedText);
   tld.map((tldata, index) => {
     return tl.push(
       <SwiperSlide key={`slide-${index}`} tag="div">
@@ -73,22 +74,25 @@ function TldsMenu({ data }) {
                           type="text"
                           class="form-control"
                           placeholder={tldata[3]}
+                          onChange={(e) => setSearchedText(e.target.value)}
                         />
-                        <button
-                          type="submit"
-                          class="search-btn btn btn-primary"
-                        >
-                          <span class="search-ico">
-                            <SearchIcon />
-                          </span>
-                          <span>Search Domains</span>
-                        </button>
+                        <Link to={`/domainresult?domain=${searchedText}`}>
+                          <button
+                            type="submit"
+                            class="search-btn btn btn-primary"
+                          >
+                            <span class="search-ico">
+                              <SearchIcon />
+                            </span>
+                            <span>Search Domains</span>
+                          </button>
+                        </Link>
                       </div>
                     </form>
                   </div>
                   <div class="tld-link">
                     <a href="#">
-                      Learn more about <span>.{tldata[0]}</span>
+                      Learn more about <span>{tldata[0]}</span>
                       <ArrowLogo />
                     </a>
                   </div>
@@ -107,34 +111,33 @@ function TldsMenu({ data }) {
       </SwiperSlide>
     );
   });
+  console.log(tl);
 
   return (
     <main>
       <div class="home-slider-main-box">
         <div class="home-slider-box">
-          <div class="home-slider swiper">
-            <Swiper
-              id="main"
-              tag="div"
-              wrapperTag="div"
-              navigation={{
-                nextEl: ".tld-button-next",
-                prevEl: ".tld-button-prev",
-              }}
-              slidesPerView={1}
-              loop
-              observer
-              observeParents
-              modules={[EffectFade, Thumbs]}
-              effect="fade"
-              thumbs={{
-                swiper:
-                  thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
-              }}
-            >
-              {tl}
-            </Swiper>
-          </div>
+          <Swiper
+            id="main"
+            tag="div"
+            wrapperTag="div"
+            navigation={{
+              nextEl: ".tld-button-next",
+              prevEl: ".tld-button-prev",
+            }}
+            slidesPerView={1}
+            observer
+            observeParents
+            modules={[EffectFade, Thumbs]}
+            effect="fade"
+            thumbs={{
+              swiper:
+                thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+            }}
+            className="home-slider"
+          >
+            {tl}
+          </Swiper>
         </div>
 
         <div class="tld-slider-main-box">
@@ -147,17 +150,18 @@ function TldsMenu({ data }) {
                 nextEl: ".tld-button-next",
                 prevEl: ".tld-button-prev",
               }}
-              slidesPerView={14}
-              loop
+              slidesPerView={8.6}
               direction="vertical"
               className="tld-slider"
-              loopedSlides={90}
+              loop={true}
+              loopedSlides={42}
+              observer
+              observeParents
+              modules={[Mousewheel, Keyboard]}
               mousewheel={true}
               keyboard={{
                 enabled: true,
               }}
-              observer
-              observeParents
               onSwiper={setThumbsSwiper}
               breakpoints={{
                 0: {
@@ -188,4 +192,3 @@ function TldsMenu({ data }) {
 }
 
 export default TldsMenu;
-
