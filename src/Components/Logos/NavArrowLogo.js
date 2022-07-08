@@ -2,7 +2,7 @@ import React from "react";
 
 function NavArrowLogo(props) {
   return (
-    <span class="arrow-ico">
+    <span className="arrow-ico">
       <svg
         width="20"
         height="19"

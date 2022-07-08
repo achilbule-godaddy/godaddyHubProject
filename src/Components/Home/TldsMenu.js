@@ -1,87 +1,92 @@
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation } from "swiper";
-import "../../../node_modules/swiper/swiper-bundle.css";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import { EffectFade, Thumbs, Mousewheel, Keyboard } from "swiper";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+
 import ArrowLogo from "../Logos/ArrowLogo";
 import SearchIcon from "../Logos/SearchIcon";
-import { Link, useLocation } from "react-router-dom";
-
-// Import Swiper styles
-
-SwiperCore.use([Navigation]);
+import "@splidejs/react-splide/css";
+import { validateNoCharacter } from "../../Services/validations";
 
 function TldsMenu({ data }) {
-  var [thumbsSwiper, setThumbsSwiper] = useState(null);
+  let tld = [];
+  let tl = [];
+  let tllist = [];
+  let regex = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,<>\/?~]/;
 
-  var tld = [];
-  var tl = [];
-  var tllist = [];
+  const slider1 = useRef();
+  const slider2 = useRef();
+
+  const [searchedText, setSearchedText] = useState("");
   data.map((tl) => {
     var t = [];
-
     t.push(tl.tld_name);
     t.push(tl.tld_bgimage);
     t.push(tl.tld_bgimage_mobile);
     t.push(tl.tld_placeholder);
-    tld.push(t);
+    t.push(tl.tld_heading);
+    t.push(tl.tld_desc);
+
+    return tld.push(t);
   });
-  const [searchedText, setSearchedText] = useState("");
-  console.log(tld);
-  console.log(searchedText);
+
   tld.map((tldata, index) => {
     return tl.push(
-      <SwiperSlide key={`slide-${index}`} tag="div">
-        <div class="hero-banner-slider-box d-flex align-items-end align-items-md-center">
+      <SplideSlide key={`slide-${index}`} tag="div">
+        <div className="hero-banner-slider-box d-flex align-items-end align-items-md-center">
           <div
-            class="banner-img d-none d-md-block"
+            className="banner-img d-none d-md-block"
             style={{
               backgroundImage: `url(${process.env.REACT_APP_TLD_IMAGE_URL}${tldata[1]})`,
             }}
           ></div>
           <div
-            class="banner-img d-block d-md-none"
+            className="banner-img d-block d-md-none"
             style={{
               backgroundImage: `url(${process.env.REACT_APP_TLD_IMAGE_URL}${tldata[2]})`,
             }}
           ></div>
-          <div class="container">
-            <div class="row">
-              <div class="col-xxl-6 col-xl-7 col-md-8">
-                <div class="hero-text mt-md-auto text-white">
-                  <h1>
-                    Own what <br />
-                    you do.
-                  </h1>
-                  <div class="hero-text-details">
-                    <p>
-                      Find the perfect domain name that lets folks know who you
-                      are and what you're all about
-                    </p>
+          <div className="container">
+            <div className="row">
+              <div className="col-xxl-6 col-xl-7 col-md-8">
+                <div className="hero-text mt-md-auto text-white">
+                  <h1>{tldata[4]}</h1>
+                  <div className="hero-text-details">
+                    <p>{tldata[5]}</p>
                   </div>
-                  <div class="tld-search">
+                  <div className="tld-search">
                     <form action="#">
-                      <div class="tld-search-form">
-                        <span class="search-ico">
+                      <div className="tld-search-form">
+                        <span className="search-ico">
                           <SearchIcon />
                         </span>
                         <input
                           type="text"
-                          class="form-control"
+                          className="form-control"
                           placeholder={tldata[3]}
-                          onChange={(e) => setSearchedText(e.target.value)}
+                          onKeyPress={(e) => validateNoCharacter(e)}
+                          onChange={(e) => {
+                            let text = e.target.value;
+
+                            if (regex.test(text)) {
+                              setSearchedText("");
+                            } else {
+                              setSearchedText(text);
+                            }
+                          }}
                         />
-                        <Link to={`/domainresult?domain=${searchedText}`}>
+                        <Link
+                          to={
+                            searchedText
+                              ? `/domainresult?domain=${searchedText}`
+                              : "/"
+                          }
+                        >
                           <button
                             type="submit"
-                            class="search-btn btn btn-primary"
+                            className="search-btn btn btn-primary"
                           >
-                            <span class="search-ico">
+                            <span className="search-ico">
                               <SearchIcon />
                             </span>
                             <span>Search Domains</span>
@@ -90,9 +95,9 @@ function TldsMenu({ data }) {
                       </div>
                     </form>
                   </div>
-                  <div class="tld-link">
-                    <a href="#">
-                      Learn more about <span>{tldata[0]}</span>
+                  <div className="tld-link">
+                    <a href="/#">
+                      Learn more about <span>.{tldata[0]}</span>
                       <ArrowLogo />
                     </a>
                   </div>
@@ -101,94 +106,97 @@ function TldsMenu({ data }) {
             </div>
           </div>
         </div>
-      </SwiperSlide>
+      </SplideSlide>
     );
   });
+
   tld.map((tldata, index) => {
-    tllist.push(
-      <SwiperSlide key={`slide-${index}`} tag="div">
-        <span class="tld-name">{tldata[0]}</span>
-      </SwiperSlide>
+    return tllist.push(
+      <SplideSlide key={`slide-${index}`} tag="div">
+        <span className="tld-name">.{tldata[0]}</span>
+      </SplideSlide>
     );
   });
-  console.log(tl);
+
+  const SPLIDE_OPTIONS_main = {
+    type: "fade",
+    heightRatio: 0.5,
+    pagination: false,
+    arrows: false,
+    cover: true,
+  };
+
+  const SPLIDE_OPTIONS_thumb = {
+    type: "loop",
+    isNavigation: true,
+    gap: 0,
+    focus: 1,
+    pagination: false,
+    cover: true,
+    direction: "ttb",
+    heightRatio: 3.1,
+    perPage: 15,
+
+    breakpoints: {
+      419: {
+        heightRatio: 1.8,
+        perPage: 6,
+      },
+      575: {
+        heightRatio: 1.6,
+        perPage: 7,
+      },
+      767: {
+        heightRatio: 1.6,
+        perPage: 7,
+      },
+      991: {
+        heightRatio: 2,
+        perPage: 10,
+      },
+      1199: {
+        heightRatio: 2.2,
+        perPage: 14,
+      },
+      1399: {
+        heightRatio: 2.3,
+        perPage: 14,
+      },
+    },
+  };
+
+  useEffect(() => {
+    slider1.current.sync(slider2.current.splide);
+  }, [slider1, slider2]);
 
   return (
-    <main>
-      <div class="home-slider-main-box">
-        <div class="home-slider-box">
-          <Swiper
-            id="main"
-            tag="div"
-            wrapperTag="div"
-            navigation={{
-              nextEl: ".tld-button-next",
-              prevEl: ".tld-button-prev",
-            }}
-            slidesPerView={1}
-            observer
-            observeParents
-            modules={[EffectFade, Thumbs]}
-            effect="fade"
-            thumbs={{
-              swiper:
-                thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
-            }}
-            className="home-slider"
-          >
-            {tl}
-          </Swiper>
+    <>
+      <div className="home-slider-main-box">
+        <div className="home-slider-box">
+          <div className="main-slider">
+            <Splide
+              ref={(slider) => (slider1.current = slider)}
+              options={SPLIDE_OPTIONS_main}
+            >
+              {tl}
+            </Splide>
+          </div>
         </div>
 
-        <div class="tld-slider-main-box">
-          <div class="tld-slider-box">
-            <Swiper
-              id="main"
-              tag="div"
-              wrapperTag="div"
-              navigation={{
-                nextEl: ".tld-button-next",
-                prevEl: ".tld-button-prev",
-              }}
-              slidesPerView={8.6}
-              direction="vertical"
-              className="tld-slider"
-              loop={true}
-              loopedSlides={42}
-              observer
-              observeParents
-              modules={[Mousewheel, Keyboard]}
-              mousewheel={true}
-              keyboard={{
-                enabled: true,
-              }}
-              onSwiper={setThumbsSwiper}
-              breakpoints={{
-                0: {
-                  slidesPerView: 5,
-                  spaceBetween: 6,
-                },
-                768: {
-                  slidesPerView: 9,
-                  spaceBetween: 8,
-                },
-                992: {
-                  slidesPerView: 14,
-                  spaceBetween: 8,
-                },
-              }}
-            >
-              {tllist}
-              <div class="slider-nav">
-                <div class="swiper-button-prev tld-button-prev"></div>
-                <div class="swiper-button-next tld-button-next"></div>
-              </div>
-            </Swiper>
+        <div className="tld-slider-main-box">
+          <div className="tld-slider-box">
+            <div className="tld-slider">
+              <Splide
+                ref={(slider) => (slider2.current = slider)}
+                options={SPLIDE_OPTIONS_thumb}
+              >
+                {tllist}
+              </Splide>
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 }
-
 export default TldsMenu;

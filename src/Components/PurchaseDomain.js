@@ -1,35 +1,52 @@
 import React from "react";
-import purchaseOption from "../Constants/purchaseOptions";
+import { getAllChannelPartner } from "../Services/homeApi";
+import PurchaseDomainLogo from "./Logos/PurchaseDomainLogo";
+import { useState, useEffect } from "react";
 function PurchaseDomain(props) {
+  const [channelPartner, setChannelPartner] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      let data = await getAllChannelPartner();
+      setChannelPartner(data);
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div class="section-row">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 ">
-            <div class="section-title">
+    <div className="section-row">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 ">
+            <div className="section-title">
               <h3>How to secure your domain.</h3>
               <p>
                 After you find your next domain, choose from our trusted retail
                 partners. We’ll take you to their site to complete your
                 purchase.
               </p>
-              <div class="mt-3">
-                <a href="#" class="btn btn-primary">
-                  <span>See All Options<svg width="20" height="13" viewBox="0 0 20 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M14.0853 0.5L13 1.60097L17.0407 5.7H0V7.3H17.0407L13 11.399L14.0853 12.5L20 6.5L14.0853 0.5Z"/></svg></span>
+              <div className="mt-3">
+                <a href="/#" className="btn btn-primary">
+                  <span>
+                    See All Options
+                    <PurchaseDomainLogo />
+                  </span>
                 </a>
               </div>
             </div>
           </div>
 
-          <div class="col-md-8">
-            <div class="purchase-domain-logo-list">
-              <div class="row">
-                {purchaseOption.map((category) => {
+          <div className="col-md-8">
+            <div className="purchase-domain-logo-list">
+              <div className="row">
+                {channelPartner.map((partner, index) => {
                   return (
-                    <div class="col-6">
-                      <div class="purchase-domain-logo">
+                    <div className="col-6" key={index}>
+                      <div className="purchase-domain-logo">
                         <figure>
-                          <img src="images/purchase-domain-logo.jpg" alt="" />
+                          <img
+                            src={`${process.env.REACT_APP_TLD_CHANNEL_IMAGE_URL}${partner.channel_partner_image}`}
+                            alt=""
+                          />
                         </figure>
                       </div>
                     </div>
@@ -45,4 +62,3 @@ function PurchaseDomain(props) {
 }
 
 export default PurchaseDomain;
-

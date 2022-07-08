@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import TldsMenu from "./TldsMenu";
-import { getAllTlds } from "../../Services/api";
+import { getAllTlds } from "../../Services/homeApi";
 function Tldshome(props) {
   var [tldData, setTldData] = useState([]);
   useEffect(() => {
